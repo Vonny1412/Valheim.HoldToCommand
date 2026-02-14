@@ -8,7 +8,5 @@ namespace HoldToCommand.ValheimAPI.LowLevel
         {
         }
 
-        public static new readonly Core.Invokers.VoidMethodInvoker __IAPI_SetAlerted_Invoker1 = new Core.Invokers.VoidMethodInvoker(typeof(AnimalAI_Alias), "SetAlerted", new Core.Signatures.ParamSig[] {new Core.Signatures.NonGenericParamSig(typeof(bool), false)});
-    
     }
 }

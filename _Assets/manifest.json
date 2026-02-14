@@ -1,6 +1,6 @@
 {
   "name": "HoldToCommand",
-  "version_number": "1.0.0",
+  "version_number": "0.0.0",
   "website_url": "https://github.com/Vonny1412/Valheim.HoldToCommand",
   "description": "Separates petting and commanding: Tap to pet, Hold to command.",
   "dependencies": [
