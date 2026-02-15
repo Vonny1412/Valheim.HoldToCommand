@@ -11,49 +11,23 @@ namespace HoldToCommand.Patches
     [HarmonyPatch(typeof(Localization), "SetupLanguage")]
     static class Localization_SetupLanguage_Patch
     {
-        private static readonly Dictionary<string, string> CommandByLanguage = new Dictionary<string, string>()
-        {
-            ["English"] = "Command",
-            ["German"] = "Befehl",
-            ["French"] = "Commander",
-            ["Spanish"] = "Ordenar",
-            ["Italian"] = "Comanda",
-            ["Dutch"] = "Bevel",
-
-            ["Portuguese_Brazilian"] = "Comandar",
-            ["Portuguese_European"] = "Comandar",
-
-            ["Russian"] = "Команда",
-
-            ["Swedish"] = "Kommendera",
-            ["Finnish"] = "Komentaa",
-            ["Danish"] = "Kommando",
-            ["Norwegian"] = "Kommander",
-
-            ["Czech"] = "Rozkaz",
-            ["Hungarian"] = "Parancs",
-            ["Polish"] = "Rozkaz",
-            ["Slovak"] = "Rozkaz",
-
-            ["Greek"] = "Εντολή",
-            ["Turkish"] = "Komut",
-
-            ["Chinese"] = "指挥",
-            ["Chinese_Trad"] = "指揮",
-            ["Japanese"] = "命令",
-            ["Korean"] = "명령",
-        };
+        internal const string keyHold = "htc_hold";
+        internal const string keyCommand = "htc_command";
 
         static void Postfix(Localization __instance, string language)
         {
-            const string key = "htc_command";
-
-            if (!CommandByLanguage.TryGetValue(language, out var value))
+            // Fallback: English entry
+            if (!Plugin.TranslationsByLanguage.TryGetValue(language, out var values))
             {
-                value = CommandByLanguage["English"]; // fallback
+                if (!Plugin.TranslationsByLanguage.TryGetValue("English", out values))
+                {
+                    // super-fallback: hardcoded minimal
+                    values = ("Hold $1", "Command");
+                }
             }
 
-            __instance.AddWord(key, value);
+            __instance.AddWord(keyHold, values.holdTpl);
+            __instance.AddWord(keyCommand, values.commandVerb);
         }
     }
 }
