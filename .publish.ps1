@@ -113,9 +113,10 @@ New-Item -ItemType Directory -Path $publishDir -Force | Out-Null
 $zipPath = Join-Path $publishDir ("{0}-{1}.zip" -f $guid, $ver)
 if (Test-Path $zipPath) { Fail "vergessen version zu updaten?" }
 
-# --- Staging folder (dist) ---
-$distRoot = Join-Path $projectRoot "dist"
-if (Test-Path $distRoot) { Remove-Item $distRoot -Recurse -Force }
+# --- Create staging folder in temp ---
+$tempBase = [System.IO.Path]::GetTempPath()
+$tempName = "htc_pack_" + [System.Guid]::NewGuid().ToString("N")
+$distRoot = Join-Path $tempBase $tempName
 New-Item -ItemType Directory -Path $distRoot -Force | Out-Null
 
 # --- Optional: copy _Assets/BepInEx into dist root (if it exists) ---
@@ -143,6 +144,9 @@ $manifest.version_number = $ver
 
 # --- Create the zip ---
 Compress-Archive -Path (Join-Path $distRoot "*") -DestinationPath $zipPath
+
+# --- Cleanup temp folder ---
+Remove-Item $distRoot -Recurse -Force
 
 Write-Host ""
 Write-Host "Done."
