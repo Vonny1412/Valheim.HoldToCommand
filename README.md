@@ -17,7 +17,8 @@ This mod changes that behavior to:
 * Restores the ability to pet commandable creatures
 * Adds intentional hold-to-command interaction
 * Adjusted hover text to reflect new controls
-* Fully localized command label
+* Fully localized (community language support)
+* Uses external translation file (editable)
 * Lightweight and fully standalone (no dependencies)
 
 ---
@@ -25,19 +26,57 @@ This mod changes that behavior to:
 ## Installation
 
 1. Install **BepInEx** for Valheim
-2. Place `HoldToCommand.dll` into:
+2. Place the contents of the zip into:
 
 ```
-Valheim/BepInEx/plugins/
+Valheim/
+```
+
+This will install:
+
+```
+BepInEx/plugins/HoldToCommand/HoldToCommand.dll
+BepInEx/plugins/HoldToCommand/HoldToCommand.Translations.txt
 ```
 
 3. Launch the game
 
 ---
 
+## Translations
+
+HoldToCommand uses an external file:
+
+```
+HoldToCommand.Translations.txt
+```
+
+You can edit or extend this file to customize translations.
+
+Format:
+
+```
+Language|Hold $1|Command
+```
+
+Example:
+
+```
+English|Hold $1|Command
+German|$1 halten|Befehlen
+```
+
+* `$1` will automatically be replaced with the Use key (e.g. E).
+* If a language is missing, English is used as fallback.
+
+Community translations are welcome.
+
+---
+
 ## Compatibility
 
 * Client-side only
+* Works on vanilla servers
 * Safe to install or remove at any time
 * No impact on servers without the mod
 
