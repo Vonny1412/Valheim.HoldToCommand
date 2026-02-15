@@ -107,7 +107,7 @@ $dllPath = Join-Path $projectRoot ("bin\Release\net480\{0}.dll" -f $assemblyName
 if (-not (Test-Path $dllPath)) { Fail ("dll missing at: " + $dllPath) }
 
 # --- Output zip path ---
-$publishDir = Join-Path $projectRoot "publish"
+$publishDir = Join-Path $projectRoot ".publish"
 New-Item -ItemType Directory -Path $publishDir -Force | Out-Null
 
 $zipPath = Join-Path $publishDir ("{0}-{1}.zip" -f $guid, $ver)

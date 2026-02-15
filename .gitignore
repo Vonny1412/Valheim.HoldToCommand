@@ -2,7 +2,7 @@
 # Build Output
 bin/
 obj/
-publish/
+.publish/
 
 # IDE / Editor
 .vs/
