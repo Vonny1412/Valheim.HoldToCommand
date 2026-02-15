@@ -89,16 +89,18 @@ Write-Host "Version:      $ver"
 Write-Host ""
 
 # --- Required files (hard aborts) ---
-$assetsDir   = Join-Path $projectRoot "_Assets"
-$iconPath    = Join-Path $assetsDir "icon.png"
-$manifestTpl = Join-Path $assetsDir "manifest.json"
-$readmePath  = Join-Path $projectRoot "README.md"
-$licensePath = Join-Path $projectRoot "LICENSE"
+$assetsDir      = Join-Path $projectRoot "_Assets"
+$iconPath       = Join-Path $assetsDir "icon.png"
+$manifestTpl    = Join-Path $assetsDir "manifest.json"
+$readmePath     = Join-Path $projectRoot "README.md"
+$changelogPath  = Join-Path $projectRoot "CHANGELOG.txt"
+$licensePath    = Join-Path $projectRoot "LICENSE"
 
-if (-not (Test-Path $iconPath))    { Fail "icon missing" }
-if (-not (Test-Path $manifestTpl)) { Fail "manifest missing" }
-if (-not (Test-Path $readmePath))  { Fail "readme missing" }
-if (-not (Test-Path $licensePath)) { Fail "license missing" }
+if (-not (Test-Path $iconPath))       { Fail "icon missing" }
+if (-not (Test-Path $manifestTpl))    { Fail "manifest missing" }
+if (-not (Test-Path $readmePath))     { Fail "readme missing" }
+if (-not (Test-Path $changelogPath))  { Fail "changelog missing" }
+if (-not (Test-Path $licensePath))    { Fail "license missing" }
 
 # --- DLL location (hard rule) ---
 $dllPath = Join-Path $projectRoot ("bin\Release\net480\{0}.dll" -f $assemblyName)
@@ -129,9 +131,10 @@ New-Item -ItemType Directory -Path $pluginOutDir -Force | Out-Null
 Copy-Item $dllPath -Destination (Join-Path $pluginOutDir ("{0}.dll" -f $assemblyName)) -Force
 
 # --- Copy meta files to zip root ---
-Copy-Item $iconPath    -Destination (Join-Path $distRoot "icon.png")  -Force
-Copy-Item $readmePath  -Destination (Join-Path $distRoot "README.md") -Force
-Copy-Item $licensePath -Destination (Join-Path $distRoot "LICENSE")   -Force
+Copy-Item $iconPath       -Destination (Join-Path $distRoot "icon.png") -Force
+Copy-Item $readmePath     -Destination (Join-Path $distRoot "README.md") -Force
+Copy-Item $changelogPath  -Destination (Join-Path $distRoot "CHANGELOG.txt") -Force
+Copy-Item $licensePath    -Destination (Join-Path $distRoot "LICENSE") -Force
 
 # --- Load manifest template, patch version_number, write to dist root ---
 $manifest = Get-Content $manifestTpl -Raw | ConvertFrom-Json
