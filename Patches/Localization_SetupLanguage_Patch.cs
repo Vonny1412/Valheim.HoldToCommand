@@ -11,9 +11,6 @@ namespace HoldToCommand.Patches
     [HarmonyPatch(typeof(Localization), "SetupLanguage")]
     static class Localization_SetupLanguage_Patch
     {
-        internal const string keyHold = "htc_hold";
-        internal const string keyCommand = "htc_command";
-
         static void Postfix(Localization __instance, string language)
         {
             // Fallback: English entry
@@ -26,8 +23,8 @@ namespace HoldToCommand.Patches
                 }
             }
 
-            __instance.AddWord(keyHold, values.holdTpl);
-            __instance.AddWord(keyCommand, values.commandVerb);
+            __instance.AddWord(Plugin.LangKeyHold, values.holdTpl);
+            __instance.AddWord(Plugin.LangKeyCommand, values.commandVerb);
         }
     }
 }

@@ -11,10 +11,11 @@ namespace HoldToCommand.Patches
     [HarmonyPatch(typeof(Tameable), "Interact")]
     static class Tameable_Interact_Patch
     {
+        [HarmonyPriority(Priority.First)]
         static bool Prefix(Tameable __instance, Humanoid user, bool hold, bool alt, ref bool __result)
         {
             __result = __instance.CustomInteract(user, hold, alt);
-            return false; // always skip vanilla
+            return false; // we need to block original
         }
     }
 }

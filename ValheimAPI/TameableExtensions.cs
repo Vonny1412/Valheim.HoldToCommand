@@ -9,7 +9,6 @@ namespace HoldToCommand.ValheimAPI
 {
     internal static class TameableExtensions
     {
-        private const float HoldThreshold = 0.45f;
         private static Tameable lastTarget = null;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -32,14 +31,13 @@ namespace HoldToCommand.ValheimAPI
                 return false;
             }
 
-            // Shift+E rename (keep vanilla behavior)
             if (alt)
             {
+                // vanilla behavior
                 tameable.SetName();
                 return true;
             }
 
-            // only tamed creatures react
             if (!tameable.IsTamed())
             {
                 return false;
@@ -48,7 +46,6 @@ namespace HoldToCommand.ValheimAPI
             var timeNow = UnityEngine.Time.time;
             var lastPetTime = tameable.GetLastPetTime();
 
-            // HOLD = command (separated from pet)
             if (hold)
             {
 
@@ -57,12 +54,12 @@ namespace HoldToCommand.ValheimAPI
                     return false;
                 }
 
-                if (timeNow - lastPetTime < HoldThreshold)
+                if (lastTarget == tameable)
                 {
                     return false;
                 }
 
-                if (lastTarget == tameable)
+                if (timeNow - lastPetTime < Plugin.Configs.HoldThreshold.Value)
                 {
                     return false;
                 }
@@ -76,16 +73,15 @@ namespace HoldToCommand.ValheimAPI
                 lastTarget = null;
             }
 
-            // TAP = pet + message (no command)
             if (timeNow - lastPetTime <= 1f)
             {
                 return false;
             }
 
+            // vanilla-like behavior
+
             tameable.SetLastPetTime(timeNow);
             tameable.m_petEffect?.Create(tameable.transform.position, tameable.transform.rotation);
-
-            // vanilla-like message selection
             string msg = null;
             if (tameable.m_tameTextGetter != null)
             {
@@ -108,6 +104,5 @@ namespace HoldToCommand.ValheimAPI
 
             return true;
         }
-
     }
 }

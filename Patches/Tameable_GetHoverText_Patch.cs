@@ -21,11 +21,9 @@ namespace HoldToCommand.Patches
             if (idx < 0) return;
 
             var useKey = Localization.instance.Localize("$KEY_Use");
-            var holdUse = Localization.instance.Localize("$htc_hold", useKey);
-
-            var insert = Localization.instance.Localize(
-                $"  [<color=yellow><b>{holdUse}</b></color>] $htc_command"
-            );
+            var holdUse = Localization.instance.Localize($"${Plugin.LangKeyHold}", useKey);
+            var command = Localization.instance.Localize($"${Plugin.LangKeyCommand}");
+            var insert = $"  [<color=yellow><b>{holdUse}</b></color>] {command}";
 
             __result = __result.Insert(idx + pet.Length, insert);
         }

@@ -10,11 +10,12 @@ namespace HoldToCommand
 {
     public sealed partial class Plugin : BaseUnityPlugin
     {
-        //internal static ManualLogSource Log;
 
         internal static ManualLogSource Log { get; private set; }
 
-        internal const string LangFileName = "HoldToCommand.Translations.txt";
+        internal const string TranslationsFile = "HoldToCommand.Translations.txt";
+        internal const string LangKeyHold = "htc_hold";
+        internal const string LangKeyCommand = "htc_command";
 
         internal static readonly Dictionary<string, (string holdTpl, string commandVerb)> TranslationsByLanguage
             = new Dictionary<string, (string holdTpl, string commandVerb)>(StringComparer.OrdinalIgnoreCase);
@@ -23,6 +24,7 @@ namespace HoldToCommand
         {
             Log = this.Logger;
             Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), null);
+            Plugin.Configs.Initialize(Config);
             LoadTranslationsFile();
         }
 
@@ -32,7 +34,7 @@ namespace HoldToCommand
             {
                 var asmPath = Assembly.GetExecutingAssembly().Location;
                 var dir = Path.GetDirectoryName(asmPath);
-                var file = Path.Combine(dir ?? ".", LangFileName);
+                var file = Path.Combine(dir ?? ".", TranslationsFile);
 
                 if (!File.Exists(file))
                 {
@@ -66,7 +68,7 @@ namespace HoldToCommand
                     TranslationsByLanguage[language] = (holdTpl, command);
                 }
 
-                Log?.LogInfo($"Loaded {TranslationsByLanguage.Count} translation entries from HoldToCommand.Translations.txt");
+                Log?.LogDebug($"Loaded {TranslationsByLanguage.Count} translation entries from {TranslationsFile}");
             }
             catch (Exception ex)
             {
