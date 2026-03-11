@@ -95,3 +95,7 @@ Community translations are welcome.
 ## License
 
 MIT License
+
+---
+
+*Created with ♥️ — and AI-assisted tools as a supporting tool*

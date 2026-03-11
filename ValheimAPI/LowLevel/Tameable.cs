@@ -2,7 +2,7 @@ using Tameable_Alias = Tameable;
 
 namespace HoldToCommand.ValheimAPI.LowLevel
 {
-    public partial class Tameable : UnityEngine.MonoBehaviour
+    public partial class Tameable : Core.ClassPublicizer
     {
         public Tameable(Tameable_Alias instance) : base(instance)
         {

@@ -15,3 +15,8 @@
 ## v1.0.0
 
 * Improved compatibility with other mods by checking `__runOriginal` in the `Tameable.Interact()` patch
+
+## v1.0.1
+
+* Updated README
+* Added AI-assisted development note for transparency
