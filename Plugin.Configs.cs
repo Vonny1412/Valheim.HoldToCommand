@@ -10,6 +10,7 @@ namespace HoldToCommand
             private const string Section_General = "General";
 
             public static ConfigEntry<float> HoldThreshold { get; private set; }
+            public static ConfigEntry<bool> ShowInNewLine { get; private set; }
 
             public static void Initialize(ConfigFile Config)
             {
@@ -24,6 +25,15 @@ namespace HoldToCommand
                     new ConfigDescription(
                         "Time in seconds the Use key must be held to issue a command.",
                         new AcceptableValueRange<float>(0f, 1f)
+                    )
+                );
+
+                ShowInNewLine = Config.Bind<bool>(
+                    section,
+                    "ShowInNewLine",
+                    false,
+                    new ConfigDescription(
+                        "Show the command on a new line instead of after the pet command."
                     )
                 );
 

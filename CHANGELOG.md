@@ -20,3 +20,9 @@
 
 * Updated README
 * Added AI-assisted development note for transparency
+
+## v1.0.2
+
+* Added config option `ShowInNewLine`
+* Adjusted plugin initialization order
+* Improved localization registration to avoid missing translation keys

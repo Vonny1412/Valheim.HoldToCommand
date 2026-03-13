@@ -1,6 +1,7 @@
 ﻿using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
+using HoldToCommand.ValheimAPI;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,9 +24,10 @@ namespace HoldToCommand
         private void Awake()
         {
             Log = this.Logger;
-            Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), null);
             Plugin.Configs.Initialize(Config);
             LoadTranslationsFile();
+            Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), null);
+            //RegisterTranslations(); // no need to. will get post-registered anyway
         }
 
         private static void LoadTranslationsFile()
@@ -38,7 +40,7 @@ namespace HoldToCommand
 
                 if (!File.Exists(file))
                 {
-                    Log?.LogWarning($"Translations file not found: {file} (will use English fallback)");
+                    Log.LogInfo($"Translations file not found: {file} (will use English fallback)");
                     return;
                 }
 
@@ -50,7 +52,7 @@ namespace HoldToCommand
                     var parts = line.Split('|');
                     if (parts.Length < 3)
                     {
-                        Log?.LogWarning($"Invalid translations line (expected 3 columns): {rawLine}");
+                        Log.LogWarning($"Invalid translations line (expected 3 columns): {rawLine}");
                         continue;
                     }
 
@@ -61,19 +63,60 @@ namespace HoldToCommand
                     if (language.Length == 0) continue;
                     if (holdTpl.Length == 0 || command.Length == 0)
                     {
-                        Log?.LogWarning($"Empty values in translations line: {rawLine}");
+                        Log.LogWarning($"Empty values in translations line: {rawLine}");
                         continue;
                     }
 
                     TranslationsByLanguage[language] = (holdTpl, command);
                 }
 
-                Log?.LogDebug($"Loaded {TranslationsByLanguage.Count} translation entries from {TranslationsFile}");
+                Log.LogDebug($"Loaded {TranslationsByLanguage.Count} translation entries from {TranslationsFile}");
             }
             catch (Exception ex)
             {
-                Log?.LogError($"Failed to load translations file: {ex}");
+                Log.LogError($"Failed to load translations file: {ex}");
             }
+        }
+
+        internal static bool TranslationsRegistered { get; private set; } = false;
+
+        internal static void InvalidateTranslations()
+        {
+            TranslationsRegistered = false;
+        }
+
+        internal static bool RegisterTranslations(Localization loc, string language = null)
+        {
+            if (TranslationsRegistered)
+            {
+                return true;
+            }
+
+            if (loc == null)
+            {
+                return false;
+            }
+
+            try
+            {
+                language ??= loc.GetSelectedLanguage();
+            }
+            catch
+            {
+                return false;
+            }
+
+            if (!TranslationsByLanguage.TryGetValue(language, out var values) &&
+                !TranslationsByLanguage.TryGetValue("English", out values))
+            {
+                values = ("Hold $1", "Command");
+            }
+
+            loc.AddWord(LangKeyHold, values.holdTpl);
+            loc.AddWord(LangKeyCommand, values.commandVerb);
+
+            TranslationsRegistered = true;
+            return true;
         }
 
     }
