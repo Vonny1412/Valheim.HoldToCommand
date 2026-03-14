@@ -103,7 +103,7 @@ if (-not (Test-Path $changelogPath))  { Fail "changelog missing" }
 if (-not (Test-Path $licensePath))    { Fail "license missing" }
 
 # --- DLL location (hard rule) ---
-$dllPath = Join-Path $projectRoot ("bin\Release\net480\{0}.dll" -f $assemblyName)
+$dllPath = Join-Path $projectRoot ("bin\Release\netstandard2.1\{0}.dll" -f $assemblyName)
 if (-not (Test-Path $dllPath)) { Fail ("dll missing at: " + $dllPath) }
 
 # --- Output zip path ---

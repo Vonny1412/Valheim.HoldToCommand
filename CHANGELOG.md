@@ -30,3 +30,7 @@
 ## v1.0.3
 
 * Translation strings are now `handled internally` instead of being registered in Valheim's Localization system
+
+## v1.0.4
+
+* Fixed wrong version beeing published
