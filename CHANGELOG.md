@@ -29,4 +29,4 @@
 
 ## v1.0.3
 
-* * Translation strings are now `handled internally` instead of being registered in Valheim's Localization system
+* Translation strings are now `handled internally` instead of being registered in Valheim's Localization system
