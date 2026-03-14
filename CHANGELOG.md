@@ -26,3 +26,7 @@
 * Added config option `ShowInNewLine`
 * Adjusted plugin initialization order
 * Improved localization registration to avoid missing translation keys
+
+## v1.0.3
+
+* * Translation strings are now `handled internally` instead of being registered in Valheim's Localization system

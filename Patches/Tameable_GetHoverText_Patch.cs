@@ -18,25 +18,25 @@ namespace HoldToCommand.Patches
                 return;
             }
 
-            if (!Plugin.RegisterTranslations(Localization.instance))
+            var loc = Localization.instance;
+            if (!Plugin.RegisterTranslations(loc))
             {
                 return;
             }
 
-            var pet = Localization.instance.Localize("$hud_pet");
+            var pet = loc.Localize("$hud_pet");
             int idx = __result.IndexOf(pet, StringComparison.Ordinal);
             if (idx < 0)
             {
                 return;
             }
 
-            var useKey = Localization.instance.Localize("$KEY_Use");
-            var holdUse = Localization.instance.Localize($"${Plugin.LangKeyHold}", useKey);
-            var command = Localization.instance.Localize($"${Plugin.LangKeyCommand}");
-            var insert = $"[<color=yellow><b>{holdUse}</b></color>] {command}";
+            var useKey = loc.Localize("$KEY_Use");
+            var holdUse = Plugin.HoldTemplate.Replace("$1", useKey);
+            var command = Plugin.CommandVerb;
             var seperator = Plugin.Configs.ShowInNewLine.Value == true ? "\n" : "  ";
 
-            __result = __result.Insert(idx + pet.Length, seperator + insert);
+            __result = __result.Insert(idx + pet.Length, seperator + "[<color=yellow><b>" + holdUse + "</b></color>] " + command);
         }
     }
 }

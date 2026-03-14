@@ -1,7 +1,6 @@
 ﻿using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
-using HoldToCommand.ValheimAPI;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,8 +14,8 @@ namespace HoldToCommand
         internal static ManualLogSource Log { get; private set; }
 
         internal const string TranslationsFile = "HoldToCommand.Translations.txt";
-        internal const string LangKeyHold = "htc_hold";
-        internal const string LangKeyCommand = "htc_command";
+        internal static string HoldTemplate { get; private set; } = "";
+        internal static string CommandVerb { get; private set; } = "";
 
         internal static readonly Dictionary<string, (string holdTpl, string commandVerb)> TranslationsByLanguage
             = new Dictionary<string, (string holdTpl, string commandVerb)>(StringComparer.OrdinalIgnoreCase);
@@ -27,7 +26,6 @@ namespace HoldToCommand
             Plugin.Configs.Initialize(Config);
             LoadTranslationsFile();
             Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), null);
-            //RegisterTranslations(); // no need to. will get post-registered anyway
         }
 
         private static void LoadTranslationsFile()
@@ -85,7 +83,7 @@ namespace HoldToCommand
             TranslationsRegistered = false;
         }
 
-        internal static bool RegisterTranslations(Localization loc, string language = null)
+        internal static bool RegisterTranslations(Localization loc)
         {
             if (TranslationsRegistered)
             {
@@ -97,9 +95,10 @@ namespace HoldToCommand
                 return false;
             }
 
+            string language;
             try
             {
-                language ??= loc.GetSelectedLanguage();
+                language = loc.GetSelectedLanguage();
             }
             catch
             {
@@ -112,12 +111,10 @@ namespace HoldToCommand
                 values = ("Hold $1", "Command");
             }
 
-            loc.AddWord(LangKeyHold, values.holdTpl);
-            loc.AddWord(LangKeyCommand, values.commandVerb);
-
+            HoldTemplate = values.holdTpl;
+            CommandVerb = values.commandVerb;
             TranslationsRegistered = true;
             return true;
         }
-
     }
 }
