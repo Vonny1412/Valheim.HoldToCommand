@@ -38,3 +38,7 @@
 ## v1.0.5
 
 * Updated for Valheim 1.0
+
+## v1.0.6
+
+* Global structural update of my projects - nothing important changed
