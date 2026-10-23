@@ -1,0 +1,43 @@
+# HoldToCommand.Translations.txt
+# Format: Language|htc_hold (use $1 placeholder for key)|htc_command (VERB)
+# Language names must match Valheim/Jotunn folder names exactly.
+
+English|Hold $1|Command
+German|$1 halten|Befehlen
+French|Maintenir $1|Commander
+Italian|$1 tenere|Comandare
+Spanish|Mantener $1|Ordenar
+Dutch|$1 vasthouden|Bevelen
+Portuguese_European|Segurar $1|Comandar
+Portuguese_Brazilian|Segurar $1|Comandar
+
+Swedish|Håll $1|Kommendera
+Danish|Hold $1|Kommander
+Norwegian|Hold $1|Kommander
+Finnish|Pidä $1|Komentaa
+Icelandic|Halda $1|Skipaða
+
+Russian|$1 удерживать|Командовать
+Ukrainian|$1 утримувати|Командувати
+Polish|Przytrzymać $1|Rozkazać
+Czech|Držet $1|Velet
+Slovak|Držať $1|Rozkázať
+Hungarian|$1 tartani|Parancsolni
+Romanian|Ține $1|Comandă
+Bulgarian|$1 задържане|Командвай
+Macedonian|Држи $1|Нареди
+Croatian|Držati $1|Naredi
+Serbian|Držati $1|Naredi
+Latvian|Turēt $1|Komandēt
+Lithuanian|Laikyti $1|Komanduoti
+Greek|Κράτα $1|Διέταξε
+Georgian|$1 დაჭერა|უბრძანე
+Turkish|$1 basılı tut|Komut ver
+Hindi|$1 दबाकर रखें|आदेश दें
+Thai|กด $1 ค้าง|สั่ง
+
+Chinese|按住$1|指挥
+Chinese_Trad|按住$1|指揮
+Japanese|$1長押し|命令
+Korean|$1 길게|명령
+Abenaki|Hold $1|Command
