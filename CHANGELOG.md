@@ -34,3 +34,7 @@
 ## v1.0.4
 
 * Fixed wrong version beeing published
+
+## v1.0.5
+
+* Updated for Valheim 1.0
